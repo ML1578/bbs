@@ -27,7 +27,7 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/post/create">发表新贴</a></li>
+                <li><a href="/post/create/">发表新贴</a></li>
                 {% if "uid" in request.session %}
                     <li><a href="/user/info/">Hello, {{request.session.nickname}}</a></li>
                     <li>
@@ -35,10 +35,10 @@
                             <img src="{{request.session.avatar}}" height="25px" width="25px">
                         </a>
                     </li>
-                    <li><a href="/user/logout">退出</a></li>
+                    <li><a href="/user/logout/">退出</a></li>
                 {% else %}
-                    <li><a href="/user/register">注册</a></li>
-                    <li><a href="/user/login">登录</a></li>
+                    <li><a href="/user/register/">注册</a></li>
+                    <li><a href="/user/login/">登录</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -48,7 +48,7 @@
         <div class="col-md-8">{% block container%}{% endblock %}</div>
         <div class="col-md-4">
             <div class="well">
-                <form class="form-horizontal" action="/post/search" method="POST">
+                <form class="form-horizontal" action="/post/search/" method="POST">
                     {% csrf_token %}
                     <input type="text" class="form-control" placeholder="搜索" name="keyword">
                 </form>

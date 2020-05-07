@@ -7,7 +7,7 @@ class User(models.Model):
         ('F', '女性'),
         ('S', '保密'),
     )  #限制性别
-    nickname = models.CharField(max_length=16)
+    nickname = models.CharField(max_length=16, unique=True)
     password = models.CharField(max_length=128)
     icon = models.ImageField()
     age = models.IntegerField(default=18)

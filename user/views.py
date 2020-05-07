@@ -10,7 +10,7 @@ def register(request):
         form = RegisterForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
-            user.password = make_password(user.password)
+            user.password = make_password(user.password)  #  密码加密
             user.save()
 
         #     记录登录状态
@@ -26,13 +26,29 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        pass
+        nickname = request.POST.get('nickname')
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(nickname=nickname)
+        except User.DoesNotExist:
+            return render(request, 'login.html', {'error', '用户不存在'})
+
+        # 验证密码
+        if check_password(password, user.password):
+            request.session['uid'] = user.id
+            request.session['nickname'] = user.nickname
+            request.session['avatar'] = user.icon.url
+            return redirect('/user/info/')
+        else:
+            return render(request, 'login.html', {'error', '用户密码错误'})
     else:
         return render(request, 'login.html', )
 
 
 def logout(request):
-    return render(request, 'logout.html', {})
+    request.session.flush()  # 清空session,完成退出
+    return redirect('/user/login/')
 
 
 def user_info(request):
